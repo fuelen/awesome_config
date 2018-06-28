@@ -345,7 +345,7 @@ local volume = lain.widget.pulseaudio({
         volicon:set_image(beautiful[index])
     end
 })
-volume.sink = 0
+volume.sink = "@DEFAULT_SINK@"
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -505,19 +505,19 @@ volicon:buttons(awful.util.table.join(
         awful.util.spawn_with_shell("pavucontrol")
     end),
     awful.button({}, 2, function() -- middle click
-        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %d 100%%", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %s 100%%", volume.sink))
         volume.update()
     end),
     awful.button({}, 3, function() -- right click
-        awful.util.spawn_with_shell(string.format("pactl set-sink-mute %d toggle", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-mute %s toggle", volume.sink))
         volume.update()
     end),
     awful.button({}, 4, function() -- scroll up
-        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %d +5%%", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %s +5%%", volume.sink))
         volume.update()
     end),
     awful.button({}, 5, function() -- scroll down
-        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %d -5%%", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %s -5%%", volume.sink))
         volume.update()
     end)
 ))
@@ -623,15 +623,15 @@ globalkeys = gears.table.join(
               {description = "show the menubar", group = "launcher"}),
     -- Volume
     awful.key({ }, "XF86AudioRaiseVolume",  function()
-        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %d +5%%", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %s +5%%", volume.sink))
         volume.update()
     end),
     awful.key({ }, "XF86AudioLowerVolume",  function()
-        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %d -5%%", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-volume %s -5%%", volume.sink))
         volume.update()
     end),
     awful.key({}, "XF86AudioMute", function()
-        awful.util.spawn_with_shell(string.format("pactl set-sink-mute %d toggle", volume.sink))
+        awful.util.spawn_with_shell(string.format("pactl set-sink-mute %s toggle", volume.sink))
         volume.update()
     end),
 
